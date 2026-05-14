@@ -195,7 +195,7 @@ updateTmDisplay();
 function playBeep() {
   const utter = new SpeechSynthesisUtterance('time is up');
   utter.pitch = 1.4;
-  utter.rate  = 0.9;
+  utter.rate  = 0.65;
   const voices = speechSynthesis.getVoices();
   const lady = voices.find(v => /zira|hazel|susan|eva|female|woman/i.test(v.name));
   if (lady) utter.voice = lady;
