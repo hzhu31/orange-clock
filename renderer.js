@@ -194,14 +194,24 @@ updateTmDisplay();
 // ── Beep ───────────────────────────────────────────────────────────────────
 function playBeep() {
   const ctx  = new AudioContext();
-  const osc  = ctx.createOscillator();
   const gain = ctx.createGain();
-  osc.connect(gain);
   gain.connect(ctx.destination);
-  osc.type = 'sine';
-  osc.frequency.value = 880;
-  gain.gain.value = 0.3;
-  osc.start();
-  osc.stop(ctx.currentTime + 0.6);
-  osc.addEventListener('ended', () => ctx.close());
+  gain.gain.value = 0.25;
+
+  function chirp(when) {
+    const osc = ctx.createOscillator();
+    osc.connect(gain);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1000, when);
+    osc.frequency.exponentialRampToValueAtTime(3000, when + 0.15);
+    osc.start(when);
+    osc.stop(when + 0.15);
+  }
+
+  const t = ctx.currentTime + 0.05;
+  chirp(t);
+  chirp(t + 0.30);
+  chirp(t + 0.60);
+
+  setTimeout(() => ctx.close(), 1200);
 }
