@@ -193,9 +193,9 @@ updateTmDisplay();
 
 // ── Beep ───────────────────────────────────────────────────────────────────
 function playBeep() {
-  const utter = new SpeechSynthesisUtterance('time... is... up');
+  const utter = new SpeechSynthesisUtterance('time.. is.. up');
   utter.pitch  = 1.0;
-  utter.rate   = 0.4;
+  utter.rate   = 0.7;
   utter.volume = 1.0;
 
   const speak = () => {
