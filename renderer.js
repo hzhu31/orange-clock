@@ -204,4 +204,5 @@ function playBeep() {
   gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
   osc.start(ctx.currentTime);
   osc.stop(ctx.currentTime + 0.6);
+  osc.addEventListener('ended', () => ctx.close());
 }
