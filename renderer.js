@@ -193,27 +193,11 @@ updateTmDisplay();
 
 // ── Beep ───────────────────────────────────────────────────────────────────
 function playBeep() {
-  const ctx  = new AudioContext();
-  const gain = ctx.createGain();
-  gain.connect(ctx.destination);
-  gain.gain.value = 0.25;
-
-  function chirp(when) {
-    const osc = ctx.createOscillator();
-    osc.connect(gain);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(1000, when);
-    osc.frequency.exponentialRampToValueAtTime(3000, when + 0.15);
-    osc.start(when);
-    osc.stop(when + 0.15);
-  }
-
-  const t = ctx.currentTime + 0.05;
-  chirp(t);
-  chirp(t + 0.60);
-  chirp(t + 1.20);
-  chirp(t + 1.80);
-  chirp(t + 2.40);
-
-  setTimeout(() => ctx.close(), 3200);
+  const utter = new SpeechSynthesisUtterance('time is up');
+  utter.pitch = 1.4;
+  utter.rate  = 0.9;
+  const voices = speechSynthesis.getVoices();
+  const lady = voices.find(v => /zira|hazel|susan|eva|female|woman/i.test(v.name));
+  if (lady) utter.voice = lady;
+  speechSynthesis.speak(utter);
 }
